@@ -447,9 +447,9 @@ elif st.session_state.phase == "results":
             <h2 class="ph">How It Works</h2>
             <div class="pdr"></div>
             <div class="mr">
-                <div class="mb"><div class="mv">{n_rated:,}</div><div class="ml">Books Rated</div></div>
+                <div class="mb"><div class="mv">{n_rated:,}</div><div class="ml">Books Rated by User</div></div>
                 <div class="mb"><div class="mv">{n_users:,}</div><div class="ml">Total Readers</div></div>
-                <div class="mb"><div class="mv">{n_books:,}</div><div class="ml">In Catalog</div></div>
+                <div class="mb"><div class="mv">{n_books:,}</div><div class="ml">Books In Catalog</div></div>
             </div>
             <div class="ic">
                 <div class="it">Collaborative Filtering (UBCF)</div>
