@@ -320,7 +320,7 @@ elif st.session_state.phase == "form":
         </div>
         """, unsafe_allow_html=True)
 
-        selected_user = st.selectbox("Select your user ID", options=all_users, index=0)
+        selected_user = st.selectbox("Type your user ID", options=all_users, index=0)
         top_n         = st.slider("How many recommendations?", 5, 15, 10, 5)
 
         st.markdown("""
