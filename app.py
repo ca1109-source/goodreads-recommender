@@ -71,15 +71,41 @@ section[data-testid="stSidebar"] { display: none !important; }
 .glow-overlay{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(255,160,50,0.07) 0%,transparent 70%);pointer-events:none;z-index:1;animation:flicker 4s ease-in-out infinite;}
 @keyframes flicker{0%,100%{opacity:1;}50%{opacity:0.75;}}
 
-/* ── Intro ── */
-.intro-screen{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;}
-.main-title{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:700;color:#f5d78e;text-align:center;text-shadow:0 0 40px rgba(255,180,50,0.5),2px 4px 8px rgba(0,0,0,0.8);line-height:1.15;animation:fadeUp 1.8s ease forwards;}
-.main-title em{font-style:italic;color:#ffeaa0;}
-.subtitle{font-family:'Lato',sans-serif;font-size:1rem;font-weight:300;color:rgba(245,215,142,0.65);letter-spacing:0.22em;text-transform:uppercase;animation:fadeUp 2.2s ease forwards;}
+/* ── Intro title ── */
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    text-shadow:
+        0 0 20px rgba(0,0,0,1),
+        0 0 60px rgba(0,0,0,0.95),
+        3px 5px 14px rgba(0,0,0,1);
+    line-height: 1.15;
+    animation: fadeUp 1.8s ease forwards;
+}
+.main-title em { font-style: italic; color: #f5d78e; }
+.subtitle {
+    font-family: 'Lato', sans-serif; font-size: 0.95rem;
+    font-weight: 300; color: rgba(255,255,255,0.75);
+    letter-spacing: 0.25em; text-transform: uppercase;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+    animation: fadeUp 2.2s ease forwards;
+    margin-bottom: 8px;
+}
 @keyframes fadeUp{0%{opacity:0;transform:translateY(-24px);}100%{opacity:1;transform:translateY(0);}}
 
+/* ── Intro: hide column backgrounds, center button ── */
+.intro-col-bg [data-testid="stVerticalBlock"] {
+    background: transparent !important;
+    box-shadow: none !important;
+    min-height: unset !important;
+    padding: 0 8px !important;
+    border-radius: 0 !important;
+}
+
 /* ── Book pages via column targeting ── */
-/* LEFT column = parchment */
 [data-testid="stHorizontalBlock"] > div:nth-child(1) > [data-testid="stVerticalBlock"] {
     background: linear-gradient(160deg, #fdf6e3 0%, #f9edd8 50%, #f5e6cc 100%) !important;
     min-height: 92vh !important;
@@ -88,14 +114,12 @@ section[data-testid="stSidebar"] { display: none !important; }
     box-shadow: -4px 0 24px rgba(0,0,0,0.5), inset -6px 0 16px rgba(0,0,0,0.06) !important;
     position: relative !important; z-index: 10 !important;
 }
-/* SPINE column */
 [data-testid="stHorizontalBlock"] > div:nth-child(2) > [data-testid="stVerticalBlock"] {
     background: linear-gradient(180deg,#5a2a00,#3d1500,#5a2a00) !important;
     min-height: 92vh !important;
     box-shadow: -5px 0 14px rgba(0,0,0,0.5),5px 0 14px rgba(0,0,0,0.5) !important;
     z-index: 11 !important;
 }
-/* RIGHT column = parchment */
 [data-testid="stHorizontalBlock"] > div:nth-child(3) > [data-testid="stVerticalBlock"] {
     background: linear-gradient(200deg, #fdf6e3 0%, #f9edd8 50%, #f5e6cc 100%) !important;
     min-height: 92vh !important;
@@ -105,7 +129,7 @@ section[data-testid="stSidebar"] { display: none !important; }
     position: relative !important; z-index: 10 !important;
 }
 
-.book-wrapper{position:relative;z-index:10;padding:16px 12px;}
+.book-wrapper { position: relative; z-index: 10; padding: 16px 12px; }
 
 /* ── Page typography ── */
 .page-chapter{font-family:'Lato',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:#8B4513;margin-bottom:6px;}
@@ -118,27 +142,27 @@ section[data-testid="stSidebar"] { display: none !important; }
 div[data-testid="stSelectbox"] label,
 div[data-testid="stSlider"] label,
 div[data-testid="stTextArea"] label,
-div[data-testid="stTextInput"] label{
+div[data-testid="stTextInput"] label {
     font-family:'Lato',sans-serif !important;font-size:0.68rem !important;
     font-weight:700 !important;letter-spacing:0.14em !important;
     text-transform:uppercase !important;color:#5a2a00 !important;
 }
 div[data-testid="stSelectbox"] > div > div,
 div[data-testid="stTextArea"] textarea,
-div[data-testid="stTextInput"] input{
+div[data-testid="stTextInput"] input {
     background:rgba(255,245,220,0.95) !important;
     border:1px solid rgba(139,69,19,0.3) !important;
     border-radius:4px !important;
     font-family:'Lato',sans-serif !important;color:#2c1500 !important;
 }
-div[data-testid="stButton"] > button{
+div[data-testid="stButton"] > button {
     font-family:'Playfair Display',serif !important;
     font-size:0.95rem !important;
     background:linear-gradient(135deg,#8B4513,#5a2008) !important;
     color:#f5d78e !important;border:1px solid #c87941 !important;
     border-radius:6px !important;width:100% !important;padding:10px !important;
     box-shadow:0 4px 12px rgba(0,0,0,0.3) !important;
-    transition: all 0.3s !important;
+    transition:all 0.3s !important;
 }
 div[data-testid="stButton"] > button:hover{transform:translateY(-2px) !important;}
 
@@ -161,10 +185,6 @@ div[data-testid="stButton"] > button:hover{transform:translateY(-2px) !important
 .rec-scroll{max-height:calc(92vh - 190px);overflow-y:auto;padding-right:4px;}
 .rec-scroll::-webkit-scrollbar{width:3px;}
 .rec-scroll::-webkit-scrollbar-thumb{background:rgba(139,69,19,0.25);border-radius:2px;}
-
-.back-link{font-family:'Lato',sans-serif;font-size:0.7rem;color:#8B4513;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;display:inline-block;margin-bottom:14px;opacity:0.7;}
-.back-link:hover{opacity:1;}
-
 .page-number{font-family:'Playfair Display',serif;font-size:0.72rem;color:rgba(139,69,19,0.4);margin-top:16px;}
 </style>
 """, unsafe_allow_html=True)
@@ -258,26 +278,56 @@ def rerank(api_key, candidates, preference, top_n):
 # PHASE: INTRO
 # =============================================================================
 if st.session_state.phase == "intro":
+
+    # Title block — pure HTML, sits above shelves
     st.markdown("""
-    <div class="intro-screen">
-        <div style="text-align:center;">
-            <p class="subtitle">A Goodreads Project</p>
-            <h1 class="main-title">The <em>Book</em><br>Recommender</h1>
-        </div>
-        <p style="font-family:'Lato',sans-serif;font-size:0.72rem;
-           color:rgba(245,215,142,0.4);letter-spacing:0.18em;text-transform:uppercase;">
-           Open to begin
-        </p>
+    <div style="position:relative;z-index:10;
+         display:flex;flex-direction:column;align-items:center;
+         justify-content:center;padding-top:22vh;padding-bottom:6vh;
+         text-align:center;gap:0;">
+        <p class="subtitle">A Goodreads Project</p>
+        <h1 class="main-title">The <em>Book</em><br>Recommender</h1>
     </div>
     """, unsafe_allow_html=True)
-    _, mid, _ = st.columns([1.5, 1, 1.5])
-    with mid:
+
+    # Button — no column wrappers so no tan blocks
+    btn_css = """
+    <style>
+    /* On intro phase only: make ALL column backgrounds transparent */
+    .intro-phase [data-testid="stVerticalBlock"] {
+        background: transparent !important;
+        box-shadow: none !important;
+        min-height: unset !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+    }
+    .intro-phase {
+        position: relative;
+        z-index: 20;
+        display: flex;
+        justify-content: center;
+        margin-top: 0;
+    }
+    .intro-phase div[data-testid="stButton"] > button {
+        font-size: 1.1rem !important;
+        padding: 14px 40px !important;
+        letter-spacing: 0.04em !important;
+    }
+    </style>
+    <div class="intro-phase">
+    """
+    st.markdown(btn_css, unsafe_allow_html=True)
+
+    col1, col2, col3 = st.columns([2, 1.2, 2])
+    with col2:
         if st.button("📖  Start Recommendation  →", use_container_width=True):
             st.session_state.phase = "form"
             st.rerun()
 
+    st.markdown("</div>", unsafe_allow_html=True)
+
 # =============================================================================
-# PHASE: FORM  (Ch1 left = user/top_n | Ch2 right = AI reranking + button)
+# PHASE: FORM  (Ch1 left | Ch2 right)
 # =============================================================================
 elif st.session_state.phase == "form":
     st.markdown('<div class="book-wrapper">', unsafe_allow_html=True)
@@ -299,9 +349,8 @@ elif st.session_state.phase == "form":
         top_n         = st.slider("How many recommendations?", 5, 15, 10, 5)
 
         st.markdown("""
-        <p class="page-body" style="margin-top:24px;opacity:0.55;font-style:italic;">
-            Complete Chapter II on the right page, then click
-            <strong>Find My Books</strong> to see your picks.
+        <p class="page-body" style="margin-top:24px;opacity:0.5;font-style:italic;">
+            Complete Chapter II on the right, then click <strong>Find My Books</strong>.
         </p>
         <p class="page-number">— 1 —</p>
         """, unsafe_allow_html=True)
@@ -332,10 +381,10 @@ elif st.session_state.phase == "form":
 
         if st.button("✦  Find My Books", use_container_width=True):
             with st.spinner("Consulting the shelves…"):
-                st.session_state.cf_recs      = get_cf_recs(selected_user, top_n)
-                st.session_state.reranked     = []
+                st.session_state.cf_recs       = get_cf_recs(selected_user, top_n)
+                st.session_state.reranked      = []
                 st.session_state.selected_user = selected_user
-                st.session_state.preference   = preference
+                st.session_state.preference    = preference
                 if gemini_key and preference.strip():
                     try:
                         st.session_state.reranked = rerank(
@@ -358,24 +407,26 @@ elif st.session_state.phase == "results":
     st.markdown('<div class="book-wrapper">', unsafe_allow_html=True)
     left_col, spine_col, right_col = st.columns([11, 0.3, 11])
 
-    picks   = st.session_state.reranked
-    cf_list = st.session_state.cf_recs
-    user    = st.session_state.selected_user
-    pref    = st.session_state.preference
+    picks    = st.session_state.reranked
+    cf_list  = st.session_state.cf_recs
+    user     = st.session_state.selected_user
+    pref     = st.session_state.preference
+    n_rated  = len(ratings[ratings["user_id"] == user]) if user else 0
+    n_users  = ratings["user_id"].nunique()
+    n_books  = ratings["book_id"].nunique()
 
-    # ── LEFT: curated picks ────────────────────────────────────────────────
     with left_col:
         st.markdown(f"""
         <p class="page-chapter">Your Recommendations</p>
         <h2 class="page-heading">Curated Picks</h2>
         <div class="page-divider"></div>
         <p class="page-body" style="margin-bottom:12px;">
-            {"✦ Re-ranked by Gemini for: <em>\"" + pref + "\"</em>" if picks else "Top picks based on readers like you:"}
+            {"✦ Re-ranked by Gemini for: <em>\"" + pref + "\"</em>" if picks
+             else "Top picks based on readers like you:"}
         </p>
         """, unsafe_allow_html=True)
 
         st.markdown('<div class="rec-scroll">', unsafe_allow_html=True)
-        display = picks if picks else cf_list
 
         if picks:
             for i, pick in enumerate(picks, 1):
@@ -406,12 +457,7 @@ elif st.session_state.phase == "results":
     with spine_col:
         st.markdown("<div style='height:92vh'></div>", unsafe_allow_html=True)
 
-    # ── RIGHT: model info ──────────────────────────────────────────────────
     with right_col:
-        n_rated = len(ratings[ratings["user_id"] == user]) if user else 0
-        n_users = ratings["user_id"].nunique()
-        n_books = ratings["book_id"].nunique()
-
         st.markdown("""
         <p class="page-chapter">About This Recommendation</p>
         <h2 class="page-heading">How It Works</h2>
@@ -433,9 +479,7 @@ elif st.session_state.phase == "results":
                 <div class="metric-lbl">Books in Catalog</div>
             </div>
         </div>
-        """, unsafe_allow_html=True)
 
-        st.markdown("""
         <div class="info-card">
             <div class="info-card-title">Collaborative Filtering (UBCF)</div>
             <div class="info-card-body">
@@ -475,6 +519,7 @@ elif st.session_state.phase == "results":
         """, unsafe_allow_html=True)
 
         st.markdown("<div style='height:12px'></div>", unsafe_allow_html=True)
+
         if st.button("← Start Over", use_container_width=True):
             st.session_state.phase    = "form"
             st.session_state.cf_recs  = []
@@ -490,8 +535,8 @@ elif st.session_state.phase == "results":
 # Footer
 # =============================================================================
 st.markdown("""
-<div style="position:fixed;bottom:0;left:0;right:0;z-index:5;padding:6px;text-align:center;
-     background:linear-gradient(transparent,rgba(0,0,0,0.3));">
+<div style="position:fixed;bottom:0;left:0;right:0;z-index:5;padding:6px;
+     text-align:center;background:linear-gradient(transparent,rgba(0,0,0,0.3));">
     <span style="font-family:'Lato',sans-serif;font-size:0.6rem;
           color:rgba(245,215,142,0.3);letter-spacing:0.12em;">
         OPAN 6604 · Project 2 · Cliff Akins · UBCF Pearson k=50 · Gemini gemini-2.5-flash-lite
