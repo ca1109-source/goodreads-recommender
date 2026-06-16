@@ -72,41 +72,68 @@ section[data-testid="stSidebar"] { display: none !important; }
 @keyframes flicker{0%,100%{opacity:1;}50%{opacity:0.75;}}
 
 /* ── Intro title ── */
+.intro-title-block {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20vh;
+    padding-bottom: 4vh;
+    text-align: center;
+}
+.title-backdrop {
+    background: rgba(20, 8, 0, 0.62);
+    border-radius: 16px;
+    padding: 28px 56px 32px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(245,215,142,0.12);
+}
 .main-title {
     font-family: 'Playfair Display', serif;
     font-size: clamp(3rem, 7vw, 5.5rem);
     font-weight: 700;
-    color: #ffffff;
-    text-align: center;
-    text-shadow:
-        0 0 20px rgba(0,0,0,1),
-        0 0 60px rgba(0,0,0,0.95),
-        3px 5px 14px rgba(0,0,0,1);
+    color: #f5d78e;
     line-height: 1.15;
     animation: fadeUp 1.8s ease forwards;
 }
-.main-title em { font-style: italic; color: #f5d78e; }
+.main-title em { font-style: italic; color: #ffd97a; }
 .subtitle {
-    font-family: 'Lato', sans-serif; font-size: 0.95rem;
-    font-weight: 300; color: rgba(255,255,255,0.75);
-    letter-spacing: 0.25em; text-transform: uppercase;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+    font-family: 'Lato', sans-serif; font-size: 0.9rem;
+    font-weight: 300; color: rgba(245,215,142,0.75);
+    letter-spacing: 0.28em; text-transform: uppercase;
     animation: fadeUp 2.2s ease forwards;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
-@keyframes fadeUp{0%{opacity:0;transform:translateY(-24px);}100%{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(-20px);}100%{opacity:1;transform:translateY(0);}}
 
-/* ── Intro: hide column backgrounds, center button ── */
-.intro-col-bg [data-testid="stVerticalBlock"] {
+/* ── Intro button: fully transparent columns ── */
+.intro-btn-row {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+}
+.intro-btn-row [data-testid="stVerticalBlock"] {
     background: transparent !important;
     box-shadow: none !important;
     min-height: unset !important;
-    padding: 0 8px !important;
+    padding: 4px 8px !important;
     border-radius: 0 !important;
 }
+.intro-btn-row div[data-testid="stButton"] > button {
+    font-size: 1.05rem !important;
+    padding: 13px 36px !important;
+}
 
-/* ── Book pages via column targeting ── */
-[data-testid="stHorizontalBlock"] > div:nth-child(1) > [data-testid="stVerticalBlock"] {
+/* ── Book pages: ONLY inside .book-wrapper ── */
+.book-wrapper {
+    position: relative;
+    z-index: 10;
+    padding: 16px 12px;
+}
+.book-wrapper [data-testid="stHorizontalBlock"] > div:nth-child(1) > [data-testid="stVerticalBlock"] {
     background: linear-gradient(160deg, #fdf6e3 0%, #f9edd8 50%, #f5e6cc 100%) !important;
     min-height: 92vh !important;
     padding: 36px 32px 28px !important;
@@ -114,13 +141,13 @@ section[data-testid="stSidebar"] { display: none !important; }
     box-shadow: -4px 0 24px rgba(0,0,0,0.5), inset -6px 0 16px rgba(0,0,0,0.06) !important;
     position: relative !important; z-index: 10 !important;
 }
-[data-testid="stHorizontalBlock"] > div:nth-child(2) > [data-testid="stVerticalBlock"] {
+.book-wrapper [data-testid="stHorizontalBlock"] > div:nth-child(2) > [data-testid="stVerticalBlock"] {
     background: linear-gradient(180deg,#5a2a00,#3d1500,#5a2a00) !important;
     min-height: 92vh !important;
     box-shadow: -5px 0 14px rgba(0,0,0,0.5),5px 0 14px rgba(0,0,0,0.5) !important;
     z-index: 11 !important;
 }
-[data-testid="stHorizontalBlock"] > div:nth-child(3) > [data-testid="stVerticalBlock"] {
+.book-wrapper [data-testid="stHorizontalBlock"] > div:nth-child(3) > [data-testid="stVerticalBlock"] {
     background: linear-gradient(200deg, #fdf6e3 0%, #f9edd8 50%, #f5e6cc 100%) !important;
     min-height: 92vh !important;
     padding: 36px 32px 28px !important;
@@ -128,8 +155,6 @@ section[data-testid="stSidebar"] { display: none !important; }
     box-shadow: 4px 0 24px rgba(0,0,0,0.5), inset 6px 0 16px rgba(0,0,0,0.06) !important;
     position: relative !important; z-index: 10 !important;
 }
-
-.book-wrapper { position: relative; z-index: 10; padding: 16px 12px; }
 
 /* ── Page typography ── */
 .page-chapter{font-family:'Lato',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:#8B4513;margin-bottom:6px;}
@@ -279,52 +304,24 @@ def rerank(api_key, candidates, preference, top_n):
 # =============================================================================
 if st.session_state.phase == "intro":
 
-    # Title block — pure HTML, sits above shelves
+    # Title with dark backdrop pill — readable over any shelf
     st.markdown("""
-    <div style="position:relative;z-index:10;
-         display:flex;flex-direction:column;align-items:center;
-         justify-content:center;padding-top:22vh;padding-bottom:6vh;
-         text-align:center;gap:0;">
-        <p class="subtitle">A Goodreads Project</p>
-        <h1 class="main-title">The <em>Book</em><br>Recommender</h1>
+    <div class="intro-title-block">
+        <div class="title-backdrop">
+            <p class="subtitle">A Goodreads Project</p>
+            <h1 class="main-title">The <em>Book</em><br>Recommender</h1>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Button — no column wrappers so no tan blocks
-    btn_css = """
-    <style>
-    /* On intro phase only: make ALL column backgrounds transparent */
-    .intro-phase [data-testid="stVerticalBlock"] {
-        background: transparent !important;
-        box-shadow: none !important;
-        min-height: unset !important;
-        padding: 0 !important;
-        border-radius: 0 !important;
-    }
-    .intro-phase {
-        position: relative;
-        z-index: 20;
-        display: flex;
-        justify-content: center;
-        margin-top: 0;
-    }
-    .intro-phase div[data-testid="stButton"] > button {
-        font-size: 1.1rem !important;
-        padding: 14px 40px !important;
-        letter-spacing: 0.04em !important;
-    }
-    </style>
-    <div class="intro-phase">
-    """
-    st.markdown(btn_css, unsafe_allow_html=True)
-
+    # Button in its own transparent wrapper — NO columns
+    st.markdown('<div class="intro-btn-row">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns([2, 1.2, 2])
     with col2:
         if st.button("📖  Start Recommendation  →", use_container_width=True):
             st.session_state.phase = "form"
             st.rerun()
-
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # =============================================================================
 # PHASE: FORM  (Ch1 left | Ch2 right)
