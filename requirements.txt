@@ -1,0 +1,6 @@
+streamlit
+scikit-surprise
+google-genai
+pydantic
+pandas
+numpy
