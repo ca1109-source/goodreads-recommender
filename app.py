@@ -111,7 +111,7 @@ section[data-testid="stSidebar"] { display: none !important; }
 .intro-btn-row {
     position: relative; z-index: 20;
     display: flex; justify-content: center;
-    margin-top: 48px;
+    margin-top: 80px;
 }
 .intro-btn-row [data-testid="stVerticalBlock"] {
     background: transparent !important;
@@ -121,8 +121,8 @@ section[data-testid="stSidebar"] { display: none !important; }
     border-radius: 0 !important;
 }
 .intro-btn-row div[data-testid="stButton"] > button {
-    font-size: 1.4rem !important;
-    padding: 20px 56px !important;
+    font-size: 1.7rem !important;
+    padding: 26px 72px !important;
     letter-spacing: 0.04em !important;
 }
 
