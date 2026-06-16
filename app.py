@@ -1,6 +1,5 @@
 """
 Goodreads Recommender — 3-phase UX
-Background approach: fixed full-width parchment div behind content using absolute positioning.
 """
 
 import streamlit as st
@@ -44,7 +43,6 @@ section[data-testid="stSidebar"] { display: none !important; }
 .block-container { padding: 0 !important; max-width: 100% !important; }
 [data-testid="stVerticalBlock"] { gap: 0rem !important; }
 
-/* ── Library background ── */
 .library-bg {
     position: fixed; inset: 0;
     background: linear-gradient(160deg,#1a0a00 0%,#3d1a00 30%,#5c2d00 55%,#2a0d00 100%);
@@ -79,7 +77,7 @@ section[data-testid="stSidebar"] { display: none !important; }
 .intro-btn-row [data-testid="stVerticalBlock"]{background:transparent!important;box-shadow:none!important;min-height:unset!important;padding:4px 8px!important;border-radius:0!important;}
 .intro-btn-row div[data-testid="stButton"] > button{font-size:1.7rem!important;padding:26px 72px!important;letter-spacing:0.04em!important;}
 
-/* ── THE BOOK BACKGROUND — fixed behind everything ── */
+/* ── Fixed book background ── */
 .book-bg {
     position: fixed;
     top: 0; left: 12px; right: 12px; bottom: 0;
@@ -94,55 +92,49 @@ section[data-testid="stSidebar"] { display: none !important; }
     background: linear-gradient(160deg,#fdf6e3 0%,#f9edd8 50%,#f5e6cc 100%);
     border-radius: 8px 0 0 8px;
     box-shadow: -4px 0 24px rgba(0,0,0,0.6), inset -6px 0 20px rgba(0,0,0,0.06);
-    background-image:
-        linear-gradient(160deg,#fdf6e3 0%,#f9edd8 50%,#f5e6cc 100%),
-        repeating-linear-gradient(transparent,transparent 27px,rgba(180,120,40,0.06) 27px,rgba(180,120,40,0.06) 28px);
 }
 .book-bg-spine {
-    width: 16px;
-    flex-shrink: 0;
+    width: 16px; flex-shrink: 0;
     background: linear-gradient(180deg,#6b3010,#3d1500,#6b3010);
-    box-shadow: -4px 0 10px rgba(0,0,0,0.5), 4px 0 10px rgba(0,0,0,0.5);
+    box-shadow: -4px 0 10px rgba(0,0,0,0.5),4px 0 10px rgba(0,0,0,0.5);
 }
 .book-bg-right {
     flex: 1;
     background: linear-gradient(200deg,#fdf6e3 0%,#f9edd8 50%,#f5e6cc 100%);
     border-radius: 0 8px 8px 0;
     box-shadow: 4px 0 24px rgba(0,0,0,0.6), inset 6px 0 20px rgba(0,0,0,0.06);
-    background-image:
-        linear-gradient(200deg,#fdf6e3 0%,#f9edd8 50%,#f5e6cc 100%),
-        repeating-linear-gradient(transparent,transparent 27px,rgba(180,120,40,0.06) 27px,rgba(180,120,40,0.06) 28px);
 }
 
-/* ── Content sits above book bg ── */
-.content-wrap {
-    position: relative;
-    z-index: 10;
-    padding: 36px 48px 28px;
-}
-
-/* ── Columns get transparent bg ── */
+/* ── Columns transparent and above book bg ── */
 [data-testid="stHorizontalBlock"] > div > [data-testid="stVerticalBlock"] {
     background: transparent !important;
     box-shadow: none !important;
     position: relative !important;
     z-index: 10 !important;
+    padding: 0 20px !important;
+}
+
+/* ── Content wrapper ── */
+.content-wrap {
+    position: relative;
+    z-index: 10;
+    padding: 28px 8px 20px;
 }
 
 /* ── Page typography ── */
 .pc{font-family:'Lato',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:#8B4513;margin-bottom:6px;}
-.ph{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#2c1500;line-height:1.2;margin-bottom:4px;}
-.pd{width:50px;height:2px;background:linear-gradient(90deg,#8B4513,transparent);margin:8px 0 14px;}
-.pdr{width:50px;height:2px;background:linear-gradient(90deg,transparent,#8B4513);margin:8px 0 14px;}
-.pb{font-family:'Lato',sans-serif;font-size:0.82rem;color:#3d2000;line-height:1.7;}
-.pn{font-family:'Playfair Display',serif;font-size:0.72rem;color:rgba(139,69,19,0.4);margin-top:14px;}
+.ph{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:#2c1500;line-height:1.2;margin-bottom:4px;}
+.pd{width:50px;height:2px;background:linear-gradient(90deg,#8B4513,transparent);margin:8px 0 12px;}
+.pdr{width:50px;height:2px;background:linear-gradient(90deg,transparent,#8B4513);margin:8px 0 12px;}
+.pb{font-family:'Lato',sans-serif;font-size:0.8rem;color:#3d2000;line-height:1.65;}
+.pn{font-family:'Playfair Display',serif;font-size:0.72rem;color:rgba(139,69,19,0.4);margin-top:12px;}
 
 /* ── Widget theming ── */
 div[data-testid="stSelectbox"] label,
 div[data-testid="stSlider"] label,
 div[data-testid="stTextArea"] label,
 div[data-testid="stTextInput"] label{
-    font-family:'Lato',sans-serif!important;font-size:0.68rem!important;
+    font-family:'Lato',sans-serif!important;font-size:0.65rem!important;
     font-weight:700!important;letter-spacing:0.14em!important;
     text-transform:uppercase!important;color:#5a2a00!important;
 }
@@ -153,31 +145,38 @@ div[data-testid="stTextInput"] input{
     border:1px solid rgba(139,69,19,0.3)!important;
     border-radius:4px!important;
     font-family:'Lato',sans-serif!important;color:#2c1500!important;
+    font-size:0.82rem!important;
 }
 div[data-testid="stButton"] > button{
-    font-family:'Playfair Display',serif!important;font-size:0.95rem!important;
+    font-family:'Playfair Display',serif!important;font-size:0.9rem!important;
     background:linear-gradient(135deg,#8B4513,#5a2008)!important;
     color:#f5d78e!important;border:1px solid #c87941!important;
-    border-radius:6px!important;width:100%!important;padding:10px!important;
+    border-radius:6px!important;width:100%!important;padding:9px!important;
     box-shadow:0 4px 12px rgba(0,0,0,0.3)!important;transition:all 0.3s!important;
 }
 div[data-testid="stButton"] > button:hover{transform:translateY(-2px)!important;}
 
+/* Tighten slider and selectbox vertical space */
+div[data-testid="stSlider"]{padding-top:4px!important;padding-bottom:4px!important;}
+div[data-testid="stSelectbox"]{margin-bottom:4px!important;}
+div[data-testid="stTextArea"]{margin-bottom:4px!important;}
+div[data-testid="stTextInput"]{margin-bottom:4px!important;}
+
 /* ── Rec cards ── */
-.ri{background:rgba(255,240,205,0.9);border-left:3px solid #8B4513;padding:9px 13px;margin-bottom:8px;border-radius:0 4px 4px 0;}
-.rr{font-family:'Playfair Display',serif;font-size:0.68rem;color:#8B4513;font-weight:700;}
-.rt{font-family:'Playfair Display',serif;font-size:0.9rem;color:#2c1500;font-weight:700;line-height:1.25;}
-.rm{font-family:'Lato',sans-serif;font-size:0.7rem;color:#6b3a00;margin-top:1px;}
-.rx{font-family:'Lato',sans-serif;font-size:0.72rem;color:#4a2800;font-style:italic;margin-top:3px;padding-top:3px;border-top:1px solid rgba(139,69,19,0.15);}
+.ri{background:rgba(255,240,205,0.9);border-left:3px solid #8B4513;padding:7px 11px;margin-bottom:7px;border-radius:0 4px 4px 0;}
+.rr{font-family:'Playfair Display',serif;font-size:0.65rem;color:#8B4513;font-weight:700;}
+.rt{font-family:'Playfair Display',serif;font-size:0.85rem;color:#2c1500;font-weight:700;line-height:1.2;}
+.rm{font-family:'Lato',sans-serif;font-size:0.68rem;color:#6b3a00;margin-top:1px;}
+.rx{font-family:'Lato',sans-serif;font-size:0.68rem;color:#4a2800;font-style:italic;margin-top:3px;padding-top:3px;border-top:1px solid rgba(139,69,19,0.15);}
 
 /* ── Info cards ── */
-.ic{background:rgba(255,240,205,0.9);border:1px solid rgba(139,69,19,0.2);padding:12px 14px;margin-bottom:10px;border-radius:4px;}
-.it{font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:700;color:#2c1500;margin-bottom:3px;}
-.ib{font-family:'Lato',sans-serif;font-size:0.76rem;color:#4a2800;line-height:1.6;}
-.mr{display:flex;gap:10px;margin-bottom:12px;}
-.mb{flex:1;background:rgba(139,69,19,0.08);border:1px solid rgba(139,69,19,0.18);border-radius:4px;padding:8px 10px;text-align:center;}
-.mv{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#8B4513;}
-.ml{font-family:'Lato',sans-serif;font-size:0.6rem;color:#6b3a00;letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
+.ic{background:rgba(255,240,205,0.9);border:1px solid rgba(139,69,19,0.2);padding:10px 12px;margin-bottom:8px;border-radius:4px;}
+.it{font-family:'Playfair Display',serif;font-size:0.82rem;font-weight:700;color:#2c1500;margin-bottom:3px;}
+.ib{font-family:'Lato',sans-serif;font-size:0.73rem;color:#4a2800;line-height:1.55;}
+.mr{display:flex;gap:8px;margin-bottom:10px;}
+.mb{flex:1;background:rgba(139,69,19,0.08);border:1px solid rgba(139,69,19,0.18);border-radius:4px;padding:7px 8px;text-align:center;}
+.mv{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#8B4513;}
+.ml{font-family:'Lato',sans-serif;font-size:0.58rem;color:#6b3a00;letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
 
 .rs{max-height:calc(88vh - 200px);overflow-y:auto;padding-right:4px;}
 .rs::-webkit-scrollbar{width:3px;}
@@ -297,7 +296,6 @@ if st.session_state.phase == "intro":
 # =============================================================================
 elif st.session_state.phase == "form":
 
-    # Fixed book background — always behind content
     st.markdown("""
     <div class="book-bg">
         <div class="book-bg-left"></div>
@@ -306,20 +304,19 @@ elif st.session_state.phase == "form":
     </div>
     """, unsafe_allow_html=True)
 
-    # Content on top
-    left_col, spine_col, right_col = st.columns([11, 0.3, 11])
+    left_col, spine_col, right_col = st.columns([10, 0.4, 10])
 
     with left_col:
         st.markdown("""
         <div class="content-wrap">
-        <p class="pc">Chapter I</p>
-        <h2 class="ph">Your Reading Profile</h2>
-        <div class="pd"></div>
-        <p class="pb" style="margin-bottom:18px;">
-            Choose your reader ID and how many recommendations you'd like.
-            Our collaborative filtering model will find readers just like you
-            and surface the books they loved that you haven't read yet.
-        </p>
+            <p class="pc">Chapter I</p>
+            <h2 class="ph">Your Reading Profile</h2>
+            <div class="pd"></div>
+            <p class="pb" style="margin-bottom:16px;">
+                Choose your reader ID and how many recommendations you'd like.
+                Our collaborative filtering model will find readers just like you
+                and surface the books they loved that you haven't read yet.
+            </p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -327,10 +324,10 @@ elif st.session_state.phase == "form":
         top_n         = st.slider("How many recommendations?", 5, 15, 10, 5)
 
         st.markdown("""
-        <p class="pb" style="margin-top:20px;opacity:0.5;font-style:italic;padding:0 16px;">
+        <p class="pb" style="margin-top:16px;opacity:0.5;font-style:italic;">
             Complete Chapter II on the right, then click <strong>Find My Books</strong>.
         </p>
-        <p class="pn" style="padding:0 16px;">— 1 —</p>
+        <p class="pn">— 1 —</p>
         """, unsafe_allow_html=True)
 
     with spine_col:
@@ -339,14 +336,14 @@ elif st.session_state.phase == "form":
     with right_col:
         st.markdown("""
         <div class="content-wrap">
-        <p class="pc">Chapter II</p>
-        <h2 class="ph">AI Re-ranking</h2>
-        <div class="pdr"></div>
-        <p class="pb" style="margin-bottom:16px;">
-            Optionally describe your current mood or favourite genre.
-            Gemini will re-rank your collaborative filtering candidates
-            to match your stated preference, with a reason for each pick.
-        </p>
+            <p class="pc">Chapter II</p>
+            <h2 class="ph">AI Re-ranking</h2>
+            <div class="pdr"></div>
+            <p class="pb" style="margin-bottom:14px;">
+                Optionally describe your current mood or favourite genre.
+                Gemini will re-rank your collaborative filtering candidates
+                to match your stated preference, with a reason for each pick.
+            </p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -354,10 +351,10 @@ elif st.session_state.phase == "form":
                                     placeholder="Paste key here (optional)")
         preference = st.text_area("Your preference / mood",
                                    value="I love gripping thrillers I can't put down",
-                                   height=90)
+                                   height=80)
         rerank_n   = st.slider("Re-ranked picks to show", 3, 8, 5)
 
-        st.markdown("<div style='height:12px'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
 
         if st.button("✦  Find My Books", use_container_width=True):
             with st.spinner("Consulting the shelves…"):
@@ -375,7 +372,7 @@ elif st.session_state.phase == "form":
             st.session_state.phase = "results"
             st.rerun()
 
-        st.markdown('<p class="pn" style="text-align:right;padding:0 16px;">— 2 —</p>',
+        st.markdown('<p class="pn" style="text-align:right;">— 2 —</p>',
                     unsafe_allow_html=True)
 
 # =============================================================================
@@ -391,7 +388,6 @@ elif st.session_state.phase == "results":
     n_users  = ratings["user_id"].nunique()
     n_books  = ratings["book_id"].nunique()
 
-    # Fixed book background
     st.markdown("""
     <div class="book-bg">
         <div class="book-bg-left"></div>
@@ -400,22 +396,22 @@ elif st.session_state.phase == "results":
     </div>
     """, unsafe_allow_html=True)
 
-    left_col, spine_col, right_col = st.columns([11, 0.3, 11])
+    left_col, spine_col, right_col = st.columns([10, 0.4, 10])
 
     with left_col:
         st.markdown(f"""
         <div class="content-wrap">
-        <p class="pc">Your Recommendations</p>
-        <h2 class="ph">Curated Picks</h2>
-        <div class="pd"></div>
-        <p class="pb" style="margin-bottom:12px;">
-            {"✦ Re-ranked by Gemini for: <em>\"" + pref + "\"</em>" if picks
-             else "Top picks based on readers like you:"}
-        </p>
+            <p class="pc">Your Recommendations</p>
+            <h2 class="ph">Curated Picks</h2>
+            <div class="pd"></div>
+            <p class="pb" style="margin-bottom:10px;">
+                {"✦ Re-ranked by Gemini for: <em>\"" + pref + "\"</em>" if picks
+                 else "Top picks based on readers like you:"}
+            </p>
         </div>
         """, unsafe_allow_html=True)
 
-        st.markdown('<div class="rs" style="padding:0 16px;">', unsafe_allow_html=True)
+        st.markdown('<div class="rs">', unsafe_allow_html=True)
         if picks:
             for i, pick in enumerate(picks, 1):
                 row    = books[books["title"] == pick.title]
@@ -439,7 +435,7 @@ elif st.session_state.phase == "results":
                     <div class="rm">{author}  ·  CF score {score:.2f}</div>
                 </div>""", unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
-        st.markdown('<p class="pn" style="padding:0 16px;">— 3 —</p>', unsafe_allow_html=True)
+        st.markdown('<p class="pn">— 3 —</p>', unsafe_allow_html=True)
 
     with spine_col:
         st.markdown("<div style='min-height:92vh;'></div>", unsafe_allow_html=True)
@@ -447,34 +443,34 @@ elif st.session_state.phase == "results":
     with right_col:
         st.markdown(f"""
         <div class="content-wrap">
-        <p class="pc">About This Recommendation</p>
-        <h2 class="ph">How It Works</h2>
-        <div class="pdr"></div>
-        <div class="mr">
-            <div class="mb"><div class="mv">{n_rated:,}</div><div class="ml">Books Rated</div></div>
-            <div class="mb"><div class="mv">{n_users:,}</div><div class="ml">Total Readers</div></div>
-            <div class="mb"><div class="mv">{n_books:,}</div><div class="ml">In Catalog</div></div>
-        </div>
-        <div class="ic">
-            <div class="it">Collaborative Filtering (UBCF)</div>
-            <div class="ib">User-Based CF with Pearson similarity, k=50 neighbours.
-            Finds the 50 readers most like you and surfaces books they loved
-            that you haven't read yet.</div>
-        </div>
-        <div class="ic">
-            <div class="it">Model Performance</div>
-            <div class="ib"><strong>RMSE:</strong> 1.03 &nbsp;·&nbsp;
-            <strong>Precision@10:</strong> 0.660 &nbsp;·&nbsp;
-            <strong>Recall@10:</strong> 0.794<br><br>
-            Selected from a four-model bake-off. Best ranking quality
-            even though the Baseline has a lower RMSE.</div>
-        </div>
-        <div class="ic">
-            <div class="it">AI Re-ranking Layer</div>
-            <div class="ib">Gemini (gemini-2.5-flash-lite) re-ranks CF candidates
-            using book metadata to match your stated mood. It reorders
-            existing picks — never generates new titles.</div>
-        </div>
+            <p class="pc">About This Recommendation</p>
+            <h2 class="ph">How It Works</h2>
+            <div class="pdr"></div>
+            <div class="mr">
+                <div class="mb"><div class="mv">{n_rated:,}</div><div class="ml">Books Rated</div></div>
+                <div class="mb"><div class="mv">{n_users:,}</div><div class="ml">Total Readers</div></div>
+                <div class="mb"><div class="mv">{n_books:,}</div><div class="ml">In Catalog</div></div>
+            </div>
+            <div class="ic">
+                <div class="it">Collaborative Filtering (UBCF)</div>
+                <div class="ib">User-Based CF with Pearson similarity, k=50 neighbours.
+                Finds the 50 readers most like you and surfaces books they loved
+                that you haven't read yet.</div>
+            </div>
+            <div class="ic">
+                <div class="it">Model Performance</div>
+                <div class="ib"><strong>RMSE:</strong> 1.03 &nbsp;·&nbsp;
+                <strong>Precision@10:</strong> 0.660 &nbsp;·&nbsp;
+                <strong>Recall@10:</strong> 0.794<br><br>
+                Selected from a four-model bake-off. Best ranking quality
+                even though the Baseline has a lower RMSE.</div>
+            </div>
+            <div class="ic">
+                <div class="it">AI Re-ranking Layer</div>
+                <div class="ib">Gemini (gemini-2.5-flash-lite) re-ranks CF candidates
+                using book metadata to match your stated mood. It reorders
+                existing picks — never generates new titles.</div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -484,7 +480,7 @@ elif st.session_state.phase == "results":
             st.session_state.reranked = []
             st.rerun()
 
-        st.markdown('<p class="pn" style="text-align:right;padding:0 16px;">— 4 —</p>',
+        st.markdown('<p class="pn" style="text-align:right;">— 4 —</p>',
                     unsafe_allow_html=True)
 
 # =============================================================================
