@@ -30,9 +30,6 @@ if "selected_user" not in st.session_state:
 if "preference" not in st.session_state:
     st.session_state.preference = ""
 
-# =============================================================================
-# CSS
-# =============================================================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
@@ -47,7 +44,6 @@ section[data-testid="stSidebar"] { display: none !important; }
 .block-container { padding: 0 !important; max-width: 100% !important; }
 [data-testid="stVerticalBlock"] { gap: 0rem !important; }
 
-/* ── Library background ── */
 .library-bg {
     position: fixed; inset: 0;
     background: linear-gradient(160deg, #1a0a00 0%, #3d1a00 30%, #5c2d00 55%, #2a0d00 100%);
@@ -71,15 +67,11 @@ section[data-testid="stSidebar"] { display: none !important; }
 .glow-overlay{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(255,160,50,0.07) 0%,transparent 70%);pointer-events:none;z-index:1;animation:flicker 4s ease-in-out infinite;}
 @keyframes flicker{0%,100%{opacity:1;}50%{opacity:0.75;}}
 
-/* ── Intro title ── */
 .intro-title-block {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column;
     align-items: center;
-    padding-top: 20vh;
-    padding-bottom: 4vh;
+    padding-top: 20vh; padding-bottom: 4vh;
     text-align: center;
 }
 .title-backdrop {
@@ -107,13 +99,10 @@ section[data-testid="stSidebar"] { display: none !important; }
 }
 @keyframes fadeUp{0%{opacity:0;transform:translateY(-20px);}100%{opacity:1;transform:translateY(0);}}
 
-/* ── Intro button: fully transparent columns ── */
 .intro-btn-row {
-    position: relative;
-    z-index: 20;
-    display: flex;
-    justify-content: center;
-    margin-top: 0;
+    position: relative; z-index: 20;
+    display: flex; justify-content: center;
+    margin-top: 24px;
 }
 .intro-btn-row [data-testid="stVerticalBlock"] {
     background: transparent !important;
@@ -127,12 +116,8 @@ section[data-testid="stSidebar"] { display: none !important; }
     padding: 13px 36px !important;
 }
 
-/* ── Book pages: ONLY inside .book-wrapper ── */
-.book-wrapper {
-    position: relative;
-    z-index: 10;
-    padding: 16px 12px;
-}
+.book-wrapper { position: relative; z-index: 10; padding: 16px 12px; }
+
 .book-wrapper [data-testid="stHorizontalBlock"] > div:nth-child(1) > [data-testid="stVerticalBlock"] {
     background: linear-gradient(160deg, #fdf6e3 0%, #f9edd8 50%, #f5e6cc 100%) !important;
     min-height: 92vh !important;
@@ -156,14 +141,12 @@ section[data-testid="stSidebar"] { display: none !important; }
     position: relative !important; z-index: 10 !important;
 }
 
-/* ── Page typography ── */
 .page-chapter{font-family:'Lato',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:#8B4513;margin-bottom:6px;}
 .page-heading{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#2c1500;line-height:1.2;margin-bottom:4px;}
 .page-divider{width:50px;height:2px;background:linear-gradient(90deg,#8B4513,transparent);margin:10px 0 16px;}
 .page-divider-right{width:50px;height:2px;background:linear-gradient(90deg,transparent,#8B4513);margin:10px 0 16px;}
 .page-body{font-family:'Lato',sans-serif;font-size:0.82rem;color:#3d2000;line-height:1.7;}
 
-/* ── Widget theming ── */
 div[data-testid="stSelectbox"] label,
 div[data-testid="stSlider"] label,
 div[data-testid="stTextArea"] label,
@@ -191,14 +174,12 @@ div[data-testid="stButton"] > button {
 }
 div[data-testid="stButton"] > button:hover{transform:translateY(-2px) !important;}
 
-/* ── Rec cards ── */
 .rec-item{background:rgba(255,240,205,0.75);border-left:3px solid #8B4513;padding:9px 13px;margin-bottom:8px;border-radius:0 4px 4px 0;}
 .rec-rank{font-family:'Playfair Display',serif;font-size:0.68rem;color:#8B4513;font-weight:700;}
 .rec-title{font-family:'Playfair Display',serif;font-size:0.9rem;color:#2c1500;font-weight:700;line-height:1.25;}
 .rec-meta{font-family:'Lato',sans-serif;font-size:0.7rem;color:#6b3a00;margin-top:1px;}
 .rec-reason{font-family:'Lato',sans-serif;font-size:0.72rem;color:#4a2800;font-style:italic;margin-top:3px;padding-top:3px;border-top:1px solid rgba(139,69,19,0.15);}
 
-/* ── Model info cards ── */
 .info-card{background:rgba(255,240,205,0.6);border:1px solid rgba(139,69,19,0.2);padding:14px 16px;margin-bottom:12px;border-radius:4px;}
 .info-card-title{font-family:'Playfair Display',serif;font-size:0.88rem;font-weight:700;color:#2c1500;margin-bottom:4px;}
 .info-card-body{font-family:'Lato',sans-serif;font-size:0.78rem;color:#4a2800;line-height:1.65;}
@@ -304,7 +285,6 @@ def rerank(api_key, candidates, preference, top_n):
 # =============================================================================
 if st.session_state.phase == "intro":
 
-    # Title with dark backdrop pill — readable over any shelf
     st.markdown("""
     <div class="intro-title-block">
         <div class="title-backdrop">
@@ -314,17 +294,16 @@ if st.session_state.phase == "intro":
     </div>
     """, unsafe_allow_html=True)
 
-    # Button in its own transparent wrapper — NO columns
     st.markdown('<div class="intro-btn-row">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns([2, 1.2, 2])
     with col2:
-        if st.button("📖  Start Recommendation  →", use_container_width=True):
+        if st.button("Start Recommendation  →", use_container_width=True):
             st.session_state.phase = "form"
             st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
 
 # =============================================================================
-# PHASE: FORM  (Ch1 left | Ch2 right)
+# PHASE: FORM
 # =============================================================================
 elif st.session_state.phase == "form":
     st.markdown('<div class="book-wrapper">', unsafe_allow_html=True)
@@ -398,7 +377,7 @@ elif st.session_state.phase == "form":
     st.markdown('</div>', unsafe_allow_html=True)
 
 # =============================================================================
-# PHASE: RESULTS  (picks left | model info right)
+# PHASE: RESULTS
 # =============================================================================
 elif st.session_state.phase == "results":
     st.markdown('<div class="book-wrapper">', unsafe_allow_html=True)
