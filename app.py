@@ -44,6 +44,7 @@ section[data-testid="stSidebar"] { display: none !important; }
 .block-container { padding: 0 !important; max-width: 100% !important; }
 [data-testid="stVerticalBlock"] { gap: 0rem !important; }
 
+/* ── Library background ── */
 .library-bg {
     position: fixed; inset: 0;
     background: linear-gradient(160deg, #1a0a00 0%, #3d1a00 30%, #5c2d00 55%, #2a0d00 100%);
@@ -61,12 +62,13 @@ section[data-testid="stSidebar"] { display: none !important; }
 .shelf:nth-child(4){bottom:345px;  animation-delay:0.5s;}
 .shelf:nth-child(5){bottom:460px;  animation-delay:1.5s;}
 @keyframes shelfFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
-.book-spine{width:28px;border-radius:3px 3px 0 0;box-shadow:inset -3px 0 6px rgba(0,0,0,0.4);}
+.book-spine-div{width:28px;border-radius:3px 3px 0 0;box-shadow:inset -3px 0 6px rgba(0,0,0,0.4);}
 .particle{position:absolute;border-radius:50%;background:rgba(255,210,100,0.5);animation:drift linear infinite;}
 @keyframes drift{0%{transform:translateY(100vh);opacity:0;}10%{opacity:1;}90%{opacity:0.4;}100%{transform:translateY(-20px) translateX(20px);opacity:0;}}
 .glow-overlay{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(255,160,50,0.07) 0%,transparent 70%);pointer-events:none;z-index:1;animation:flicker 4s ease-in-out infinite;}
 @keyframes flicker{0%,100%{opacity:1;}50%{opacity:0.75;}}
 
+/* ── Intro ── */
 .intro-title-block {
     position: relative; z-index: 10;
     display: flex; flex-direction: column;
@@ -126,37 +128,48 @@ section[data-testid="stSidebar"] { display: none !important; }
     letter-spacing: 0.04em !important;
 }
 
-.book-wrapper { position: relative; z-index: 10; padding: 16px 12px; }
+/* ── Book page divs ── */
+.page-left {
+    background: linear-gradient(160deg, #fdf6e3 0%, #f9edd8 50%, #f5e6cc 100%);
+    min-height: 92vh;
+    padding: 36px 32px 28px;
+    border-radius: 6px 0 0 6px;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.6), inset -6px 0 20px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 10;
+}
+.page-right {
+    background: linear-gradient(200deg, #fdf6e3 0%, #f9edd8 50%, #f5e6cc 100%);
+    min-height: 92vh;
+    padding: 36px 32px 28px;
+    border-radius: 0 6px 6px 0;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.6), inset 6px 0 20px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 10;
+}
+.page-spine {
+    background: linear-gradient(180deg, #5a2a00 0%, #3d1500 50%, #5a2a00 100%);
+    min-height: 92vh;
+    box-shadow: -5px 0 14px rgba(0,0,0,0.6), 5px 0 14px rgba(0,0,0,0.6);
+    z-index: 11;
+}
+.book-outer {
+    position: relative;
+    z-index: 10;
+    padding: 16px 12px;
+    display: flex;
+    align-items: stretch;
+}
 
-.book-wrapper [data-testid="stHorizontalBlock"] > div:nth-child(1) > [data-testid="stVerticalBlock"] {
-    background: linear-gradient(160deg, #fdf6e3 0%, #f9edd8 50%, #f5e6cc 100%) !important;
-    min-height: 92vh !important;
-    padding: 36px 32px 28px !important;
-    border-radius: 6px 0 0 6px !important;
-    box-shadow: -4px 0 24px rgba(0,0,0,0.5), inset -6px 0 16px rgba(0,0,0,0.06) !important;
-    position: relative !important; z-index: 10 !important;
-}
-.book-wrapper [data-testid="stHorizontalBlock"] > div:nth-child(2) > [data-testid="stVerticalBlock"] {
-    background: linear-gradient(180deg,#5a2a00,#3d1500,#5a2a00) !important;
-    min-height: 92vh !important;
-    box-shadow: -5px 0 14px rgba(0,0,0,0.5),5px 0 14px rgba(0,0,0,0.5) !important;
-    z-index: 11 !important;
-}
-.book-wrapper [data-testid="stHorizontalBlock"] > div:nth-child(3) > [data-testid="stVerticalBlock"] {
-    background: linear-gradient(200deg, #fdf6e3 0%, #f9edd8 50%, #f5e6cc 100%) !important;
-    min-height: 92vh !important;
-    padding: 36px 32px 28px !important;
-    border-radius: 0 6px 6px 0 !important;
-    box-shadow: 4px 0 24px rgba(0,0,0,0.5), inset 6px 0 16px rgba(0,0,0,0.06) !important;
-    position: relative !important; z-index: 10 !important;
-}
-
+/* ── Page typography ── */
 .page-chapter{font-family:'Lato',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:#8B4513;margin-bottom:6px;}
 .page-heading{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#2c1500;line-height:1.2;margin-bottom:4px;}
 .page-divider{width:50px;height:2px;background:linear-gradient(90deg,#8B4513,transparent);margin:10px 0 16px;}
 .page-divider-right{width:50px;height:2px;background:linear-gradient(90deg,transparent,#8B4513);margin:10px 0 16px;}
 .page-body{font-family:'Lato',sans-serif;font-size:0.82rem;color:#3d2000;line-height:1.7;}
+.page-number{font-family:'Playfair Display',serif;font-size:0.72rem;color:rgba(139,69,19,0.4);margin-top:16px;}
 
+/* ── Widgets ── */
 div[data-testid="stSelectbox"] label,
 div[data-testid="stSlider"] label,
 div[data-testid="stTextArea"] label,
@@ -184,12 +197,14 @@ div[data-testid="stButton"] > button {
 }
 div[data-testid="stButton"] > button:hover{transform:translateY(-2px) !important;}
 
+/* ── Rec cards ── */
 .rec-item{background:rgba(255,240,205,0.75);border-left:3px solid #8B4513;padding:9px 13px;margin-bottom:8px;border-radius:0 4px 4px 0;}
 .rec-rank{font-family:'Playfair Display',serif;font-size:0.68rem;color:#8B4513;font-weight:700;}
 .rec-title{font-family:'Playfair Display',serif;font-size:0.9rem;color:#2c1500;font-weight:700;line-height:1.25;}
 .rec-meta{font-family:'Lato',sans-serif;font-size:0.7rem;color:#6b3a00;margin-top:1px;}
 .rec-reason{font-family:'Lato',sans-serif;font-size:0.72rem;color:#4a2800;font-style:italic;margin-top:3px;padding-top:3px;border-top:1px solid rgba(139,69,19,0.15);}
 
+/* ── Info cards ── */
 .info-card{background:rgba(255,240,205,0.6);border:1px solid rgba(139,69,19,0.2);padding:14px 16px;margin-bottom:12px;border-radius:4px;}
 .info-card-title{font-family:'Playfair Display',serif;font-size:0.88rem;font-weight:700;color:#2c1500;margin-bottom:4px;}
 .info-card-body{font-family:'Lato',sans-serif;font-size:0.78rem;color:#4a2800;line-height:1.65;}
@@ -201,7 +216,14 @@ div[data-testid="stButton"] > button:hover{transform:translateY(-2px) !important
 .rec-scroll{max-height:calc(92vh - 190px);overflow-y:auto;padding-right:4px;}
 .rec-scroll::-webkit-scrollbar{width:3px;}
 .rec-scroll::-webkit-scrollbar-thumb{background:rgba(139,69,19,0.25);border-radius:2px;}
-.page-number{font-family:'Playfair Display',serif;font-size:0.72rem;color:rgba(139,69,19,0.4);margin-top:16px;}
+
+/* Force page columns to have no background of their own */
+.book-outer [data-testid="stVerticalBlock"] {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    gap: 0 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -215,7 +237,7 @@ COLORS = [
 ]
 def make_shelf(n):
     s = "".join(
-        f'<div class="book-spine" style="height:{55+(i*17)%45}px;background:{COLORS[i%len(COLORS)]};"></div>'
+        f'<div class="book-spine-div" style="height:{55+(i*17)%45}px;background:{COLORS[i%len(COLORS)]};"></div>'
         for i in range(n))
     return f'<div class="shelf">{s}</div>'
 
@@ -316,11 +338,32 @@ if st.session_state.phase == "intro":
 # PHASE: FORM
 # =============================================================================
 elif st.session_state.phase == "form":
-    st.markdown('<div class="book-wrapper">', unsafe_allow_html=True)
+
+    # Draw the open book pages as HTML behind the widgets
+    st.markdown("""
+    <div class="book-outer">
+        <div class="page-left" style="flex:1;">
+        </div>
+        <div class="page-spine" style="width:14px;flex-shrink:0;">
+        </div>
+        <div class="page-right" style="flex:1;">
+        </div>
+    </div>
+    <style>
+    /* Pull the column row up to overlap the book background */
+    section.main > div > div > div > div:last-child {
+        margin-top: -92vh !important;
+        position: relative !important;
+        z-index: 20 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     left_col, spine_col, right_col = st.columns([11, 0.3, 11])
 
     with left_col:
         st.markdown("""
+        <div style="padding:36px 32px 0;">
         <p class="page-chapter">Chapter I</p>
         <h2 class="page-heading">Your Reading Profile</h2>
         <div class="page-divider"></div>
@@ -329,13 +372,14 @@ elif st.session_state.phase == "form":
             Our collaborative filtering model will find readers just like you
             and surface the books they loved that you haven't read yet.
         </p>
+        </div>
         """, unsafe_allow_html=True)
 
         selected_user = st.selectbox("Select your user ID", options=all_users, index=0)
         top_n         = st.slider("How many recommendations?", 5, 15, 10, 5)
 
         st.markdown("""
-        <p class="page-body" style="margin-top:24px;opacity:0.5;font-style:italic;">
+        <p class="page-body" style="margin-top:24px;opacity:0.5;font-style:italic;padding:0 0 0 0;">
             Complete Chapter II on the right, then click <strong>Find My Books</strong>.
         </p>
         <p class="page-number">— 1 —</p>
@@ -346,6 +390,7 @@ elif st.session_state.phase == "form":
 
     with right_col:
         st.markdown("""
+        <div style="padding:36px 32px 0;">
         <p class="page-chapter">Chapter II</p>
         <h2 class="page-heading">AI Re-ranking</h2>
         <div class="page-divider-right"></div>
@@ -354,6 +399,7 @@ elif st.session_state.phase == "form":
             Gemini will re-rank your collaborative filtering candidates
             to match your stated preference, with a reason for each pick.
         </p>
+        </div>
         """, unsafe_allow_html=True)
 
         gemini_key = st.text_input("Gemini API key", type="password",
@@ -384,14 +430,25 @@ elif st.session_state.phase == "form":
         st.markdown('<p class="page-number" style="text-align:right;">— 2 —</p>',
                     unsafe_allow_html=True)
 
-    st.markdown('</div>', unsafe_allow_html=True)
-
 # =============================================================================
 # PHASE: RESULTS
 # =============================================================================
 elif st.session_state.phase == "results":
-    st.markdown('<div class="book-wrapper">', unsafe_allow_html=True)
-    left_col, spine_col, right_col = st.columns([11, 0.3, 11])
+
+    st.markdown("""
+    <div class="book-outer">
+        <div class="page-left" style="flex:1;"></div>
+        <div class="page-spine" style="width:14px;flex-shrink:0;"></div>
+        <div class="page-right" style="flex:1;"></div>
+    </div>
+    <style>
+    section.main > div > div > div > div:last-child {
+        margin-top: -92vh !important;
+        position: relative !important;
+        z-index: 20 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     picks    = st.session_state.reranked
     cf_list  = st.session_state.cf_recs
@@ -401,8 +458,11 @@ elif st.session_state.phase == "results":
     n_users  = ratings["user_id"].nunique()
     n_books  = ratings["book_id"].nunique()
 
+    left_col, spine_col, right_col = st.columns([11, 0.3, 11])
+
     with left_col:
         st.markdown(f"""
+        <div style="padding:36px 32px 0;">
         <p class="page-chapter">Your Recommendations</p>
         <h2 class="page-heading">Curated Picks</h2>
         <div class="page-divider"></div>
@@ -410,9 +470,10 @@ elif st.session_state.phase == "results":
             {"✦ Re-ranked by Gemini for: <em>\"" + pref + "\"</em>" if picks
              else "Top picks based on readers like you:"}
         </p>
+        </div>
         """, unsafe_allow_html=True)
 
-        st.markdown('<div class="rec-scroll">', unsafe_allow_html=True)
+        st.markdown('<div class="rec-scroll" style="padding:0 32px;">', unsafe_allow_html=True)
 
         if picks:
             for i, pick in enumerate(picks, 1):
@@ -438,19 +499,19 @@ elif st.session_state.phase == "results":
                 </div>""", unsafe_allow_html=True)
 
         st.markdown('</div>', unsafe_allow_html=True)
-        st.markdown('<p class="page-number">— 3 —</p>', unsafe_allow_html=True)
+        st.markdown('<p class="page-number" style="padding:0 32px;">— 3 —</p>',
+                    unsafe_allow_html=True)
 
     with spine_col:
         st.markdown("<div style='height:92vh'></div>", unsafe_allow_html=True)
 
     with right_col:
-        st.markdown("""
+        st.markdown(f"""
+        <div style="padding:36px 32px 0;">
         <p class="page-chapter">About This Recommendation</p>
         <h2 class="page-heading">How It Works</h2>
         <div class="page-divider-right"></div>
-        """, unsafe_allow_html=True)
 
-        st.markdown(f"""
         <div class="metric-row">
             <div class="metric-box">
                 <div class="metric-val">{n_rated:,}</div>
@@ -483,8 +544,7 @@ elif st.session_state.phase == "results":
                 <strong>RMSE:</strong> 1.03 &nbsp;·&nbsp;
                 <strong>Precision@10:</strong> 0.660 &nbsp;·&nbsp;
                 <strong>Recall@10:</strong> 0.794<br><br>
-                UBCF Pearson k=50 was selected from a four-model bake-off
-                (Baseline, UBCF cosine k=10, UBCF Pearson k=50, IBCF cosine k=50).
+                UBCF Pearson k=50 was selected from a four-model bake-off.
                 It achieves the best ranking quality even though the Baseline
                 has a lower RMSE — illustrating that rating accuracy and
                 recommendation quality don't always agree.
@@ -496,11 +556,11 @@ elif st.session_state.phase == "results":
             <div class="info-card-body">
                 When a preference is provided, Google Gemini
                 (gemini-2.5-flash-lite) re-ranks the CF candidates using
-                book metadata — title, author, year, and average rating —
-                to surface the best match for your stated mood or genre.
-                The LLM reorders existing CF picks; it never generates
+                book metadata to surface the best match for your stated mood.
+                The LLM reorders existing CF picks — it never generates
                 new titles from scratch.
             </div>
+        </div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -512,10 +572,8 @@ elif st.session_state.phase == "results":
             st.session_state.reranked = []
             st.rerun()
 
-        st.markdown('<p class="page-number" style="text-align:right;">— 4 —</p>',
+        st.markdown('<p class="page-number" style="text-align:right;padding:0 32px;">— 4 —</p>',
                     unsafe_allow_html=True)
-
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # =============================================================================
 # Footer
