@@ -71,29 +71,38 @@ section[data-testid="stSidebar"] { display: none !important; }
     position: relative; z-index: 10;
     display: flex; flex-direction: column;
     align-items: center;
-    padding-top: 20vh; padding-bottom: 4vh;
+    padding-top: 18vh; padding-bottom: 0;
     text-align: center;
 }
 .title-backdrop {
-    background: rgba(20, 8, 0, 0.62);
+    background: rgba(20, 8, 0, 0.65);
     border-radius: 16px;
     padding: 28px 56px 32px;
     backdrop-filter: blur(4px);
-    border: 1px solid rgba(245,215,142,0.12);
+    border: 1px solid rgba(245,215,142,0.15);
 }
 .main-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    font-weight: 700;
-    color: #f5d78e;
-    line-height: 1.15;
+    font-family: 'Playfair Display', serif !important;
+    font-size: clamp(3rem, 7vw, 5.5rem) !important;
+    font-weight: 700 !important;
+    color: #f5d78e !important;
+    -webkit-text-fill-color: #f5d78e !important;
+    line-height: 1.15 !important;
     animation: fadeUp 1.8s ease forwards;
 }
-.main-title em { font-style: italic; color: #ffd97a; }
+.main-title em {
+    font-style: italic !important;
+    color: #ffd97a !important;
+    -webkit-text-fill-color: #ffd97a !important;
+}
 .subtitle {
-    font-family: 'Lato', sans-serif; font-size: 0.9rem;
-    font-weight: 300; color: rgba(245,215,142,0.75);
-    letter-spacing: 0.28em; text-transform: uppercase;
+    font-family: 'Lato', sans-serif !important;
+    font-size: 0.9rem !important;
+    font-weight: 300 !important;
+    color: rgba(245,215,142,0.85) !important;
+    -webkit-text-fill-color: rgba(245,215,142,0.85) !important;
+    letter-spacing: 0.28em !important;
+    text-transform: uppercase !important;
     animation: fadeUp 2.2s ease forwards;
     margin-bottom: 10px;
 }
@@ -102,7 +111,7 @@ section[data-testid="stSidebar"] { display: none !important; }
 .intro-btn-row {
     position: relative; z-index: 20;
     display: flex; justify-content: center;
-    margin-top: 24px;
+    margin-top: 48px;
 }
 .intro-btn-row [data-testid="stVerticalBlock"] {
     background: transparent !important;
@@ -112,8 +121,9 @@ section[data-testid="stSidebar"] { display: none !important; }
     border-radius: 0 !important;
 }
 .intro-btn-row div[data-testid="stButton"] > button {
-    font-size: 1.05rem !important;
-    padding: 13px 36px !important;
+    font-size: 1.4rem !important;
+    padding: 20px 56px !important;
+    letter-spacing: 0.04em !important;
 }
 
 .book-wrapper { position: relative; z-index: 10; padding: 16px 12px; }
