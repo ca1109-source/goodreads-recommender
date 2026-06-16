@@ -83,7 +83,7 @@ section[data-testid="stSidebar"] { display: none !important; }
 .book-bg {
     position: fixed;
     top: 0; left: 12px; right: 12px; bottom: 0;
-    z-index: 2;
+    z-index: 1;
     display: flex;
     align-items: stretch;
     padding: 20px 0;
@@ -125,6 +125,8 @@ section[data-testid="stSidebar"] { display: none !important; }
 [data-testid="stHorizontalBlock"] > div > [data-testid="stVerticalBlock"] {
     background: transparent !important;
     box-shadow: none !important;
+    position: relative !important;
+    z-index: 10 !important;
 }
 
 /* ── Page typography ── */
