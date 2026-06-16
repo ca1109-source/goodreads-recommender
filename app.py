@@ -197,12 +197,13 @@ cf_meta     = (
 )
 
 cf_display = pd.DataFrame({
-    "Rank":         range(1, len(cf_recs) + 1),
-    "Title":        cf_titles,
-    "CF Score":     [round(s, 2) for s in cf_scores],
-}).merge(cf_meta, on="Title", how="left")
+    "Rank":   range(1, len(cf_recs) + 1),
+    "title":  cf_titles,
+    "CF Score": [round(s, 2) for s in cf_scores],
+}).merge(cf_meta, on="title", how="left")
 
 cf_display = cf_display.rename(columns={
+    "title":                      "Title",
     "authors":                    "Author(s)",
     "original_publication_year":  "Year",
     "average_rating":             "Avg Rating",
