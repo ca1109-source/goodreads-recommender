@@ -496,23 +496,7 @@ elif st.session_state.phase == "results":
         </div>
         """, unsafe_allow_html=True)
 
-        # Show live Gemini reasons if re-ranking was used
-        if picks:
-            st.markdown("""
-            <div class="ic" style="margin-top:4px;">
-                <div class="it">✦ Gemini's Reasoning</div>
-                <div class="ib" style="margin-bottom:6px;">
-                    How each top pick connects to your stated preference:
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-            for pick in picks[:2]:
-                st.markdown(f"""
-                <div class="reason-card">
-                    <div class="reason-title">{pick.title}</div>
-                    <div class="reason-text">"{pick.reason}"</div>
-                </div>
-                """, unsafe_allow_html=True)
+      
 
         if st.button("← Start Over", use_container_width=True):
             st.session_state.phase    = "form"
