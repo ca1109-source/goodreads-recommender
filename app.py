@@ -1,5 +1,6 @@
 """
 Goodreads Recommender — 3-phase UX
+OPAN 6604 Project 2 · Cliff Akins
 """
 
 import streamlit as st
@@ -156,7 +157,6 @@ div[data-testid="stButton"] > button{
 }
 div[data-testid="stButton"] > button:hover{transform:translateY(-2px)!important;}
 
-/* Tighten slider and selectbox vertical space */
 div[data-testid="stSlider"]{padding-top:4px!important;padding-bottom:4px!important;}
 div[data-testid="stSelectbox"]{margin-bottom:4px!important;}
 div[data-testid="stTextArea"]{margin-bottom:4px!important;}
@@ -177,6 +177,11 @@ div[data-testid="stTextInput"]{margin-bottom:4px!important;}
 .mb{flex:1;background:rgba(139,69,19,0.08);border:1px solid rgba(139,69,19,0.18);border-radius:4px;padding:7px 8px;text-align:center;}
 .mv{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#8B4513;}
 .ml{font-family:'Lato',sans-serif;font-size:0.58rem;color:#6b3a00;letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
+
+/* ── Gemini reason highlight card ── */
+.reason-card{background:rgba(139,69,19,0.07);border-radius:4px;padding:8px 12px;margin-bottom:8px;}
+.reason-title{font-family:'Playfair Display',serif;font-size:0.8rem;font-weight:700;color:#2c1500;}
+.reason-text{font-family:'Lato',sans-serif;font-size:0.72rem;color:#4a2800;font-style:italic;margin-top:3px;}
 
 .rs{max-height:calc(88vh - 200px);overflow-y:auto;padding-right:4px;}
 .rs::-webkit-scrollbar{width:3px;}
@@ -220,6 +225,9 @@ def load_data():
 
 @st.cache_resource
 def train_model(_ratings):
+    # UBCF with Pearson similarity, k=50 neighbours
+    # Selected as best ranker from 4-model bake-off (Baseline, UBCF cosine,
+    # UBCF Pearson, IBCF cosine) — best Precision@10 and Recall@10
     reader = Reader(rating_scale=(1, 5))
     data   = Dataset.load_from_df(_ratings[["user_id","book_id","rating"]], reader)
     model  = KNNBasic(k=50, sim_options={"name":"pearson","user_based":True}, verbose=False)
@@ -228,11 +236,13 @@ def train_model(_ratings):
 
 books, ratings = load_data()
 title_of      = dict(zip(books["book_id"], books["title"]))
+# Only recommend books with >= 20 ratings to avoid surfacing obscure titles
 popular_books = set(ratings["book_id"].value_counts()[lambda x: x >= 20].index)
 cf_model      = train_model(ratings)
 all_users     = sorted(ratings["user_id"].unique())
 
 def get_cf_recs(user_id, top_n=10):
+    """Return top-N unseen popular books for a user, ranked by predicted rating."""
     seen = set(ratings.loc[ratings["user_id"]==user_id,"book_id"])
     scored = [
         (title_of.get(b, str(b)), cf_model.predict(user_id, b).est)
@@ -245,6 +255,12 @@ class RankedPick(BaseModel):
     reason: str = Field(description="One sentence on why this fits the user's preference.")
 
 def rerank(api_key, candidates, preference, top_n):
+    """
+    AI re-ranking layer: takes CF candidates and uses Gemini to re-rank
+    them based on the user's stated mood/genre preference.
+    Model: gemini-2.5-flash-lite (Google Gemini API)
+    Output: structured JSON via Pydantic schema — no hallucinated titles.
+    """
     client = genai.Client(api_key=api_key)
     cf_map = {t:s for t,s in candidates}
     meta   = books[books["title"].isin(cf_map)].drop_duplicates("title")
@@ -260,8 +276,12 @@ def rerank(api_key, candidates, preference, top_n):
         config={
             "system_instruction": (
                 "You are a book concierge. Re-rank the candidate list to best match "
-                "the user's preference. Use only titles from the list. "
-                f"Return the top {top_n} picks best to worst."
+                "the user's stated preference. Use only titles from the provided list — "
+                "do not invent new titles. Prioritize books whose genre, tone, and subject "
+                "matter best match what the user asked for. "
+                "Explain each pick in one sentence that directly connects the book to the "
+                "user's stated preference — not just a general description of the book. "
+                f"Return the top {top_n} picks in order from best to worst fit."
             ),
             "response_mime_type": "application/json",
             "response_schema": list[RankedPick],
@@ -320,7 +340,7 @@ elif st.session_state.phase == "form":
         </div>
         """, unsafe_allow_html=True)
 
-        selected_user = st.selectbox("Type your user ID", options=all_users, index=0)
+        selected_user = st.selectbox("Select your user ID", options=all_users, index=0)
         top_n         = st.slider("How many recommendations?", 5, 15, 10, 5)
 
         st.markdown("""
@@ -398,6 +418,7 @@ elif st.session_state.phase == "results":
 
     left_col, spine_col, right_col = st.columns([10, 0.4, 10])
 
+    # ── LEFT: curated picks ────────────────────────────────────────────────
     with left_col:
         st.markdown(f"""
         <div class="content-wrap">
@@ -440,6 +461,7 @@ elif st.session_state.phase == "results":
     with spine_col:
         st.markdown("<div style='min-height:92vh;'></div>", unsafe_allow_html=True)
 
+    # ── RIGHT: model info + Gemini example ────────────────────────────────
     with right_col:
         st.markdown(f"""
         <div class="content-wrap">
@@ -447,14 +469,14 @@ elif st.session_state.phase == "results":
             <h2 class="ph">How It Works</h2>
             <div class="pdr"></div>
             <div class="mr">
-                <div class="mb"><div class="mv">{n_rated:,}</div><div class="ml">Books Rated by User</div></div>
+                <div class="mb"><div class="mv">{n_rated:,}</div><div class="ml">Books Rated</div></div>
                 <div class="mb"><div class="mv">{n_users:,}</div><div class="ml">Total Readers</div></div>
-                <div class="mb"><div class="mv">{n_books:,}</div><div class="ml">Books In Catalog</div></div>
+                <div class="mb"><div class="mv">{n_books:,}</div><div class="ml">In Catalog</div></div>
             </div>
             <div class="ic">
                 <div class="it">Collaborative Filtering (UBCF)</div>
-                <div class="ib">User-Based CF with Pearson similarity, k=50 neighbours.
-                Finds the 50 readers most like you and surfaces books they loved
+                <div class="ib">User-Based CF · Pearson similarity · k=50 neighbours.
+                Finds readers most like you and surfaces books they loved
                 that you haven't read yet.</div>
             </div>
             <div class="ic">
@@ -462,17 +484,35 @@ elif st.session_state.phase == "results":
                 <div class="ib"><strong>RMSE:</strong> 1.03 &nbsp;·&nbsp;
                 <strong>Precision@10:</strong> 0.660 &nbsp;·&nbsp;
                 <strong>Recall@10:</strong> 0.794<br><br>
-                Selected from a four-model bake-off. Best ranking quality
-                even though the Baseline has a lower RMSE.</div>
+                Best ranking quality from a four-model bake-off.
+                Rating accuracy ≠ recommendation quality.</div>
             </div>
             <div class="ic">
                 <div class="it">AI Re-ranking Layer</div>
                 <div class="ib">Gemini (gemini-2.5-flash-lite) re-ranks CF candidates
-                using book metadata to match your stated mood. It reorders
-                existing picks — never generates new titles.</div>
+                by genre, tone, and subject matter to match your stated mood.
+                Reorders existing picks — never generates new titles.</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
+
+        # Show live Gemini reasons if re-ranking was used
+        if picks:
+            st.markdown("""
+            <div class="ic" style="margin-top:4px;">
+                <div class="it">✦ Gemini's Reasoning</div>
+                <div class="ib" style="margin-bottom:6px;">
+                    How each top pick connects to your stated preference:
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            for pick in picks[:2]:
+                st.markdown(f"""
+                <div class="reason-card">
+                    <div class="reason-title">{pick.title}</div>
+                    <div class="reason-text">"{pick.reason}"</div>
+                </div>
+                """, unsafe_allow_html=True)
 
         if st.button("← Start Over", use_container_width=True):
             st.session_state.phase    = "form"
