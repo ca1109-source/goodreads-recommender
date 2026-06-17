@@ -340,7 +340,7 @@ elif st.session_state.phase == "form":
         </div>
         """, unsafe_allow_html=True)
 
-        selected_user = st.selectbox("Select your user ID", options=all_users, index=0)
+        selected_user = st.selectbox("Type your user ID", options=all_users, index=0)
         top_n         = st.slider("How many recommendations?", 5, 15, 10, 5)
 
         st.markdown("""
@@ -469,7 +469,7 @@ elif st.session_state.phase == "results":
             <h2 class="ph">How It Works</h2>
             <div class="pdr"></div>
             <div class="mr">
-                <div class="mb"><div class="mv">{n_rated:,}</div><div class="ml">Books Rated</div></div>
+                <div class="mb"><div class="mv">{n_rated:,}</div><div class="ml">Books Rated by User</div></div>
                 <div class="mb"><div class="mv">{n_users:,}</div><div class="ml">Total Readers</div></div>
                 <div class="mb"><div class="mv">{n_books:,}</div><div class="ml">In Catalog</div></div>
             </div>
